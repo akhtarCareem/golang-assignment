@@ -3,6 +3,8 @@ package main
 import (
 	"net"
 	"os"
+	"os/signal"
+	"syscall"
 
 	"github.com/akhtarCareem/golang-assignment/internal/database"
 	"github.com/akhtarCareem/golang-assignment/internal/logging"
@@ -40,7 +42,21 @@ func main() {
 	grpcServer := grpc.NewServer()
 	proto.RegisterUserServiceServer(grpcServer, userService)
 	logging.Logger.Infof("UserService listening on port %s", port)
-	if err := grpcServer.Serve(lis); err != nil {
-		log.Fatalf("failed to serve: %v", err)
-	}
+
+	// Graceful Shutdown
+	go func() {
+		if err := grpcServer.Serve(lis); err != nil {
+			log.Fatalf("failed to serve: %v", err)
+		}
+	}()
+
+	// Listen for termination signals
+	quit := make(chan os.Signal, 1)
+	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
+	<-quit
+	logging.Logger.Info("UserService: Shutting down server...")
+
+	// Gracefully stop the gRPC server
+	grpcServer.GracefulStop()
+	logging.Logger.Info("UserService: Server stopped")
 }
