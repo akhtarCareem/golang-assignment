@@ -1,5 +1,4 @@
-version: "3.9"  # Use the latest version for better features
-
+version: "3.7"
 services:
   db:
     image: postgres:14
@@ -14,14 +13,9 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
-      start_period: 5s
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
 
   userservice:
-    build:
-      context: .
-      dockerfile: Dockerfile.userservice
+    build: .
     environment:
       DB_HOST: db
       DB_USER: postgres
@@ -29,16 +23,13 @@ services:
       DB_NAME: careem
       USER_SERVICE_PORT: "50051"
     depends_on:
-      db:
-        condition: service_healthy
+      - db
     ports:
       - "50051:50051"
       - "9090:9090"
 
   bookingservice:
-    build:
-      context: .
-      dockerfile: Dockerfile.bookingservice
+    build: .
     environment:
       DB_HOST: db
       DB_USER: postgres
@@ -46,16 +37,13 @@ services:
       DB_NAME: careem
       BOOKING_SERVICE_PORT: "50052"
     depends_on:
-      db:
-        condition: service_healthy
+      - db
     ports:
       - "50052:50052"
       - "9091:9091"
 
   rideservice:
-    build:
-      context: .
-      dockerfile: Dockerfile.rideservice
+    build: .
     environment:
       DB_HOST: db
       DB_USER: postgres
@@ -63,11 +51,7 @@ services:
       DB_NAME: careem
       RIDE_SERVICE_PORT: "50053"
     depends_on:
-      db:
-        condition: service_healthy
+      - db
     ports:
       - "50053:50053"
       - "9092:9092"
-
-volumes:
-  postgres_data:
