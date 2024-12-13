@@ -1,7 +1,7 @@
 package repositories
 
 import (
-	"careem-assignment/internal/database"
+	"github.com/akhtarCareem/golang-assignment/internal/database"
 	"github.com/jinzhu/gorm"
 )
 

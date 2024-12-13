@@ -5,12 +5,12 @@ import (
 	"net"
 	"os"
 
-	"careem-assignment/internal/database"
-	"careem-assignment/internal/logging"
-	"careem-assignment/internal/metrics"
-	"careem-assignment/internal/repositories"
-	"careem-assignment/internal/services"
-	"careem-assignment/proto"
+	"github.com/akhtarCareem/golang-assignment/internal/database"
+	"github.com/akhtarCareem/golang-assignment/internal/logging"
+	"github.com/akhtarCareem/golang-assignment/internal/metrics"
+	"github.com/akhtarCareem/golang-assignment/internal/repositories"
+	"github.com/akhtarCareem/golang-assignment/internal/services"
+	"github.com/akhtarCareem/golang-assignment/proto"
 	"google.golang.org/grpc"
 )
 

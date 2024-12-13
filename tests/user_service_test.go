@@ -1,9 +1,9 @@
 package tests
 
 import (
-	"careem-assignment/internal/services"
-	proto "careem-assignment/proto"
 	"context"
+	"github.com/akhtarCareem/golang-assignment/internal/services"
+	proto "github.com/akhtarCareem/golang-assignment/proto"
 	"github.com/sirupsen/logrus"
 	"github.com/stretchr/testify/assert"
 	"testing"

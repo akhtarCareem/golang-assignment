@@ -5,8 +5,8 @@ import (
 	"google.golang.org/protobuf/types/known/timestamppb"
 	"time"
 
-	"careem-assignment/internal/repositories"
-	"careem-assignment/proto"
+	"github.com/akhtarCareem/golang-assignment/internal/repositories"
+	"github.com/akhtarCareem/golang-assignment/proto"
 	"github.com/sirupsen/logrus"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"

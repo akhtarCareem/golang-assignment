@@ -3,7 +3,7 @@ package repositories
 import (
 	"time"
 
-	"careem-assignment/internal/database"
+	"github.com/akhtarCareem/golang-assignment/internal/database"
 	"github.com/google/uuid"
 	"github.com/jinzhu/gorm"
 )

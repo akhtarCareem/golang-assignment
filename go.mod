@@ -1,4 +1,4 @@
-module careem-assignment
+module github.com/akhtarCareem/golang-assignment
 
 go 1.23.0
 
