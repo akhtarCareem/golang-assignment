@@ -3,12 +3,13 @@ package database
 import (
 	"fmt"
 	"os"
+	"time"
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/lib/pq"
 )
 
-// DBInit initializes and returns the database connection
+// DBInit initializes and returns the database connection with retry logic
 func DBInit() (*gorm.DB, error) {
 	host := os.Getenv("DB_HOST")
 	if host == "" {
@@ -34,9 +35,22 @@ func DBInit() (*gorm.DB, error) {
 	dsn := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
 		host, port, user, pass, dbname)
 
-	db, err := gorm.Open("postgres", dsn)
-	if err != nil {
-		return nil, err
+	var db *gorm.DB
+	var err error
+
+	// Retry logic
+	for i := 0; i < 5; i++ {
+		db, err = gorm.Open("postgres", dsn)
+		if err == nil {
+			break
+		}
+		fmt.Printf("Failed to connect to database (attempt %d/5): %v\n", i+1, err)
+		time.Sleep(2 * time.Second)
 	}
+
+	if err != nil {
+		return nil, fmt.Errorf("could not connect to database after 5 attempts: %w", err)
+	}
+
 	return db, nil
 }
